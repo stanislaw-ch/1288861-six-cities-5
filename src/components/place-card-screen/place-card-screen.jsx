@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 
 const PlaceCardScreen = (props) => {
   const {offer, onCardHover} = props;
-  const {title, type, price, url, starsCount, isPremium, isFavorite, id} = offer[0];
+  const {title, type, price, url, starsCount, isPremium, isFavorite, id} = offer;
 
   const handleHover = () => {
     onCardHover(id);
