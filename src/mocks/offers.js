@@ -9,7 +9,7 @@ export default [
     but where the bustle of the city comes to rest in this alley flowery and colorful.`],
     type: `Apartment`,
     owner: {
-      url: `img/avatar-angelina.jpg`,
+      avatar: `https://api.adorable.io/avatars/${Math.random()}`,
       name: `Angelina`,
       isSuper: true,
     },
@@ -31,13 +31,25 @@ export default [
       `http://picsum.photos/248/152?r=${Math.random()}`,
       `http://picsum.photos/248/152?r=${Math.random()}`,
       `http://picsum.photos/248/152?r=${Math.random()}`,
+      `http://picsum.photos/248/152?r=${Math.random()}`,
+      `http://picsum.photos/248/152?r=${Math.random()}`,
       `http://picsum.photos/248/152?r=${Math.random()}`
     ],
-    starsCount: 4,
+    starsCount: 4.5,
     bedroomsCount: 4,
     guestsCount: 8,
     isPremium: true,
-    isFavorite: false,
+    isFavorite: true,
+    reviews: [
+      {
+        reviewId: 1,
+        reviewAvatar: `https://api.adorable.io/avatars/${Math.random()}`,
+        reviewName: `Max`,
+        reviewDescriptions: `A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam. The building is green and from 18th century.`,
+        reviewDate: `April 2019`,
+        reviewStarsCount: 4,
+      },
+    ]
   },
   // {
   //   id: 2,
