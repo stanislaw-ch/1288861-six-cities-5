@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import PlaceCardListScreen from "../place-card-list-screen/place-card-list-screen";
-import { Link } from "react-router-dom";
+import {Link} from "react-router-dom";
 
 const MainScreen = (props) => {
   const {offersCount, offers} = props;
