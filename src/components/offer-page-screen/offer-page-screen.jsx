@@ -343,16 +343,16 @@ OfferPageScreen.propTypes = {
     isPremium: PropTypes.bool.isRequired,
     isFavorite: PropTypes.bool.isRequired,
     id: PropTypes.number.isRequired,
-    reviews: PropTypes.arrayOf(PropTypes.shape([
-      {
-        reviewAvatar: PropTypes.string.isRequired,
-        nareviewNameme: PropTypes.string.isRequired,
-        reviewDescriptions: PropTypes.string.isRequired,
-        reviewDate: PropTypes.string.isRequired,
-        reviewStarsCount: PropTypes.number.isRequired,
-        reviewId: PropTypes.number.isRequired,
-      }
-    ])).isRequired,
+    reviews: PropTypes.arrayOf(PropTypes.shape(
+        {
+          reviewAvatar: PropTypes.string.isRequired,
+          reviewName: PropTypes.string.isRequired,
+          reviewDescriptions: PropTypes.string.isRequired,
+          reviewDate: PropTypes.string.isRequired,
+          reviewStarsCount: PropTypes.number.isRequired,
+          reviewId: PropTypes.number.isRequired,
+        }
+    )).isRequired,
   }).isRequired,
 };
 
