@@ -1,8 +1,10 @@
 import React from "react";
 import PropTypes from "prop-types";
+import {Link} from "react-router-dom";
+import ReviewFormScreen from "../review-form-screen/review-form-screen";
 
 const OfferPageScreen = (props) => {
-  const {offers} = props;
+  const {offer} = props;
   const {
     title,
     descriptions,
@@ -17,7 +19,7 @@ const OfferPageScreen = (props) => {
     isPremium,
     isFavorite,
     reviews
-  } = offers;
+  } = offer;
   const {avatar, name, isSuper} = owner;
   const {reviewAvatar, reviewName, reviewDescriptions, reviewDate, reviewStarsCount} = reviews[0];
 
@@ -77,7 +79,7 @@ const OfferPageScreen = (props) => {
         <div className="container">
           <div className="header__wrapper">
             <div className="header__left">
-              <a className="header__logo-link" href="main.html">
+              <Link to="/" className="header__logo-link">
                 <img
                   className="header__logo"
                   src="/img/logo.svg"
@@ -85,19 +87,19 @@ const OfferPageScreen = (props) => {
                   width="81"
                   height="41"
                 />
-              </a>
+              </Link>
             </div>
             <nav className="header__nav">
               <ul className="header__nav-list">
                 <li className="header__nav-item user">
-                  <a
+                  <Link
                     className="header__nav-link header__nav-link--profile"
-                    href="#"
+                    to="/favorites"
                   >
                     <div className="header__avatar-wrapper user__avatar-wrapper">
                     </div>
                     <span className="header__user-name user__name">Oliver.conner@gmail.com</span>
-                  </a>
+                  </Link>
                 </li>
               </ul>
             </nav>
@@ -208,55 +210,7 @@ const OfferPageScreen = (props) => {
                     </div>
                   </li>
                 </ul>
-                <form
-                  className="reviews__form form"
-                  action="#"
-                  method="post">
-                  <label className="reviews__label form__label" htmlFor="review">Your review</label>
-                  <div className="reviews__rating-form form__rating">
-                    <input className="form__rating-input visually-hidden" name="rating" value="5" id="5-stars" type="radio" />
-                    <label htmlFor="5-stars" className="reviews__rating-label form__rating-label" title="perfect">
-                      <svg className="form__star-image" width="37" height="33">
-                        <use href="#icon-star"></use>
-                      </svg>
-                    </label>
-
-                    <input className="form__rating-input visually-hidden" name="rating" value="4" id="4-stars" type="radio" />
-                    <label htmlFor="4-stars" className="reviews__rating-label form__rating-label" title="good">
-                      <svg className="form__star-image" width="37" height="33">
-                        <use href="#icon-star"></use>
-                      </svg>
-                    </label>
-
-                    <input className="form__rating-input visually-hidden" name="rating" value="3" id="3-stars" type="radio" />
-                    <label htmlFor="3-stars" className="reviews__rating-label form__rating-label" title="not bad">
-                      <svg className="form__star-image" width="37" height="33">
-                        <use href="#icon-star"></use>
-                      </svg>
-                    </label>
-
-                    <input className="form__rating-input visually-hidden" name="rating" value="2" id="2-stars" type="radio" />
-                    <label htmlFor="2-stars" className="reviews__rating-label form__rating-label" title="badly">
-                      <svg className="form__star-image" width="37" height="33">
-                        <use href="#icon-star"></use>
-                      </svg>
-                    </label>
-
-                    <input className="form__rating-input visually-hidden" name="rating" value="1" id="1-star" type="radio" />
-                    <label htmlFor="1-star" className="reviews__rating-label form__rating-label" title="terribly">
-                      <svg className="form__star-image" width="37" height="33">
-                        <use href="#icon-star"></use>
-                      </svg>
-                    </label>
-                  </div>
-                  <textarea className="reviews__textarea form__textarea" id="review" name="review" placeholder="Tell how was your stay, what you like and what can be improved"></textarea>
-                  <div className="reviews__button-wrapper">
-                    <p className="reviews__help">
-                      To submit review please make sure to set <span className="reviews__star">rating</span> and describe your stay with at least <b className="reviews__text-amount">50 characters</b>.
-                    </p>
-                    <button className="reviews__submit form__submit button" type="submit" disabled="">Submit</button>
-                  </div>
-                </form>
+                <ReviewFormScreen />
               </section>
             </div>
           </div>
@@ -370,7 +324,7 @@ const OfferPageScreen = (props) => {
 };
 
 OfferPageScreen.propTypes = {
-  offers: PropTypes.shape({
+  offer: PropTypes.shape({
     title: PropTypes.string.isRequired,
     descriptions: PropTypes.arrayOf(PropTypes.string).isRequired,
     advantages: PropTypes.arrayOf(PropTypes.string).isRequired,
@@ -389,7 +343,7 @@ OfferPageScreen.propTypes = {
     isPremium: PropTypes.bool.isRequired,
     isFavorite: PropTypes.bool.isRequired,
     id: PropTypes.number.isRequired,
-    reviews: PropTypes.shape([
+    reviews: PropTypes.arrayOf(PropTypes.shape([
       {
         reviewAvatar: PropTypes.string.isRequired,
         nareviewNameme: PropTypes.string.isRequired,
@@ -398,7 +352,7 @@ OfferPageScreen.propTypes = {
         reviewStarsCount: PropTypes.number.isRequired,
         reviewId: PropTypes.number.isRequired,
       }
-    ]).isRequired,
+    ])).isRequired,
   }).isRequired,
 };
 

@@ -1,5 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
+import {Link} from "react-router-dom";
 
 const PlaceCardScreen = (props) => {
   const {offer, onCardHover} = props;
@@ -28,14 +29,14 @@ const PlaceCardScreen = (props) => {
     <article className="cities__place-card place-card" onMouseOver={handleHover}>
       {PremiumMarkup}
       <div className="cities__image-wrapper place-card__image-wrapper">
-        <a href="#">
+        <Link to="/offer/1">
           <img
             className="place-card__image"
             src={url}
             width="260"
             height="200"
             alt="Place image" />
-        </a>
+        </Link>
       </div>
       <div className="place-card__info">
         <div className="place-card__price-wrapper">
@@ -57,7 +58,7 @@ const PlaceCardScreen = (props) => {
           </div>
         </div>
         <h2 className="place-card__name">
-          <a href="#">{title}</a>
+          <Link to="/offer/1">{title}</Link>
         </h2>
         <p className="place-card__type">{type}</p>
       </div>
