@@ -51,7 +51,8 @@ export default [
         reviewDate: `April 2019`,
         reviewStarsCount: 4,
       },
-    ]
+    ],
+    coordinates: [52.3909553943508, 4.85309666406198],
   },
   {
     id: 2,
@@ -92,6 +93,7 @@ export default [
     guestsCount: 6,
     isPremium: false,
     isFavorite: true,
+    coordinates: [52.369553943508, 4.85309666406198],
   },
   {
     id: 3,
@@ -132,6 +134,7 @@ export default [
     guestsCount: 4,
     isPremium: false,
     isFavorite: false,
+    coordinates: [52.3909553943508, 4.929309666406198],
   },
   {
     id: 4,
@@ -172,6 +175,7 @@ export default [
     guestsCount: 4,
     isPremium: true,
     isFavorite: true,
+    coordinates: [52.3809553943508, 4.939309666406198],
   },
   // {
   //   id: 5,
