@@ -2,9 +2,14 @@ import React from "react";
 import PropTypes from "prop-types";
 import PlaceCardListScreen from "../place-card-list-screen/place-card-list-screen";
 import {Link} from "react-router-dom";
+import MapScreen from "../map-screen/map-screen.jsx";
 
 const MainScreen = (props) => {
   const {offersCount, offers} = props;
+
+  const coordinates = offers.map((offer) => {
+    return offer.coordinates;
+  });
 
   return (
     <div className="page page--gray page--main">
@@ -109,7 +114,7 @@ const MainScreen = (props) => {
               </div>
             </section>
             <div className="cities__right-section">
-              <section className="cities__map map"></section>
+              <MapScreen coordinates={coordinates} />
             </div>
           </div>
         </div >
@@ -120,7 +125,9 @@ const MainScreen = (props) => {
 
 MainScreen.propTypes = {
   offersCount: PropTypes.number.isRequired,
-  offers: PropTypes.array.isRequired,
+  offers: PropTypes.arrayOf(PropTypes.shape({
+    coordinates: PropTypes.arrayOf(PropTypes.number).isRequired,
+  })).isRequired
 };
 
 export default MainScreen;
