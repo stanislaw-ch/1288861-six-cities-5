@@ -28,7 +28,7 @@ class MapScreen extends PureComponent {
     const zoom = 12;
     const map = leaflet.map(this._mapRef.current, {
       center: city,
-      zoom: zoom,
+      zoom,
       zoomControl: false,
       marker: true
     });
@@ -36,7 +36,7 @@ class MapScreen extends PureComponent {
 
     leaflet
     .tileLayer(`https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png`, {
-    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>'
+      attribution: `&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>`
     })
     .addTo(map);
 
@@ -48,8 +48,8 @@ class MapScreen extends PureComponent {
   }
 }
 
-Map.propTypes = {
-  coordinates: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.number)),
+MapScreen.propTypes = {
+  coordinates: PropTypes.arrayOf(PropTypes.number).isRequired,
 };
 
 export default MapScreen;
