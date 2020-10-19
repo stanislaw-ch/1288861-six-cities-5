@@ -7,7 +7,7 @@ import FavoritesScreen from "../favorites-screen/favorites-screen";
 import OfferPageScreen from "../offer-page-screen/offer-page-screen";
 
 const App = (props) => {
-  const {offersCount, offers} = props;
+  const {offersCount, offers, reviews} = props;
 
   return (
     <BrowserRouter>
@@ -25,7 +25,10 @@ const App = (props) => {
           <FavoritesScreen offers={props.offers}/>
         </Route>
         <Route path="/offer/:id?" component={OfferPageScreen}>
-          <OfferPageScreen offer={props.offers[0]}/>
+          <OfferPageScreen
+            offer={props.offers[0]}
+            reviews={reviews}
+          />
         </Route>
       </Switch>
     </BrowserRouter>
@@ -35,6 +38,7 @@ const App = (props) => {
 App.propTypes = {
   offersCount: PropTypes.number.isRequired,
   offers: PropTypes.array.isRequired,
+  reviews: PropTypes.array.isRequired,
 };
 
 export default App;

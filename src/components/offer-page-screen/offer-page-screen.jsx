@@ -2,9 +2,10 @@ import React from "react";
 import PropTypes from "prop-types";
 import {Link} from "react-router-dom";
 import ReviewFormScreen from "../review-form-screen/review-form-screen";
+import ReviewListScreen from "../review-list-screen/review-list-screen";
 
 const OfferPageScreen = (props) => {
-  const {offer} = props;
+  const {offer, reviews} = props;
   const {
     title,
     descriptions,
@@ -17,11 +18,12 @@ const OfferPageScreen = (props) => {
     bedroomsCount,
     guestsCount,
     isPremium,
-    isFavorite,
-    reviews
+    isFavorite
   } = offer;
   const {avatar, name, isSuper} = owner;
-  const {reviewAvatar, reviewName, reviewDescriptions, reviewDate, reviewStarsCount} = reviews[0];
+  const {reviewsList} = reviews[0];
+
+  const ReviewCount = reviewsList.length;
 
   const photosMarkup = urls.map((photoUrl) => {
     return (
@@ -49,7 +51,6 @@ const OfferPageScreen = (props) => {
   );
 
   const raitingPercent = starsCount * 20;
-  const reviewRaitingPercent = reviewStarsCount * 20;
 
   const PropertyMarkup = advantages.map((advantage) => {
     return (
@@ -176,40 +177,8 @@ const OfferPageScreen = (props) => {
                 </div>
               </div>
               <section className="property__reviews reviews">
-                <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">1</span></h2>
-                <ul className="reviews__list">
-                  <li className="reviews__item">
-                    <div className="reviews__user user">
-                      <div className="reviews__avatar-wrapper user__avatar-wrapper">
-                        <img
-                          className="reviews__avatar user__avatar"
-                          src={reviewAvatar}
-                          width="54"
-                          height="54"
-                          alt="Reviews avatar" />
-                      </div>
-                      <span className="reviews__user-name">
-                        {reviewName}
-                      </span>
-                    </div>
-                    <div className="reviews__info">
-                      <div className="reviews__rating rating">
-                        <div className="reviews__stars rating__stars">
-                          <span style={{width: `${reviewRaitingPercent}%`}}></span>
-                          <span className="visually-hidden">Rating</span>
-                        </div>
-                      </div>
-                      <p className="reviews__text">
-                        {reviewDescriptions}
-                      </p>
-                      <time
-                        className="reviews__time"
-                        dateTime="2019-04-24">
-                        {reviewDate}
-                      </time>
-                    </div>
-                  </li>
-                </ul>
+                <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{ReviewCount}</span></h2>
+                <ReviewListScreen reviews={reviews}/>
                 <ReviewFormScreen />
               </section>
             </div>
@@ -343,17 +312,8 @@ OfferPageScreen.propTypes = {
     isPremium: PropTypes.bool.isRequired,
     isFavorite: PropTypes.bool.isRequired,
     id: PropTypes.number.isRequired,
-    reviews: PropTypes.arrayOf(PropTypes.shape(
-        {
-          reviewAvatar: PropTypes.string.isRequired,
-          reviewName: PropTypes.string.isRequired,
-          reviewDescriptions: PropTypes.string.isRequired,
-          reviewDate: PropTypes.string.isRequired,
-          reviewStarsCount: PropTypes.number.isRequired,
-          reviewId: PropTypes.number.isRequired,
-        }
-    )).isRequired,
   }).isRequired,
+  reviews: PropTypes.arrayOf(PropTypes.shape).isRequired
 };
 
 export default OfferPageScreen;
