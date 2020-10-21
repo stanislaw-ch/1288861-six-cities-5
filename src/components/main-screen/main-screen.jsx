@@ -114,7 +114,9 @@ const MainScreen = (props) => {
               </div>
             </section>
             <div className="cities__right-section">
-              <MapScreen coordinates={coordinates} />
+              <section className="cities__map map">
+                <MapScreen coordinates={coordinates} />
+              </section>
             </div>
           </div>
         </div >

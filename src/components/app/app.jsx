@@ -28,6 +28,7 @@ const App = (props) => {
           <OfferPageScreen
             offer={props.offers[0]}
             reviews={reviews}
+            offers={offers}
           />
         </Route>
       </Switch>

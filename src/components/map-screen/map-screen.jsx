@@ -11,9 +11,7 @@ class MapScreen extends PureComponent {
 
   render() {
     return (
-      <section className="cities__map map">
-        <div id="map" ref={this._mapRef} style={{height: `100%`}} />
-      </section>
+      <div id="map" ref={this._mapRef} style={{height: `100%`}} />
     );
   }
 
@@ -21,7 +19,7 @@ class MapScreen extends PureComponent {
     const city = [52.38333, 4.9];
 
     const icon = leaflet.icon({
-      iconUrl: `img/pin.svg`,
+      iconUrl: `../img/pin.svg`,
       iconSize: [30, 30]
     });
 
