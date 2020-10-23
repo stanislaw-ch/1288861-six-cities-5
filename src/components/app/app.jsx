@@ -27,6 +27,7 @@ const App = (props) => {
         <Route path="/offer/:id?" component={OfferPageScreen}>
           <OfferPageScreen
             offer={props.offers[0]}
+            currentId={1}
             reviews={reviews}
             offers={offers}
           />

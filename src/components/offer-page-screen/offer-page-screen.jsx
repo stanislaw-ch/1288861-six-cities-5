@@ -1,13 +1,15 @@
 import React from "react";
 import PropTypes from "prop-types";
 import {Link} from "react-router-dom";
-import ReviewFormScreen from "../review-form-screen/review-form-screen";
 import ReviewListScreen from "../review-list-screen/review-list-screen";
 import MapScreen from "../map-screen/map-screen";
 import PlaceCardListScreen from "../place-card-list-screen/place-card-list-screen";
 
 const OfferPageScreen = (props) => {
-  const {offer, reviews, offers} = props;
+  const {reviews, offers, currentId} = props;
+  const currentOffer = offers.find((item) => item.id === currentId);
+  const nearestOffers = offers.filter((item) => item.id !== currentId);
+  const currentReviews = reviews.find((item) => item.id === currentId);
   const {
     title,
     descriptions,
@@ -21,14 +23,15 @@ const OfferPageScreen = (props) => {
     guestsCount,
     isPremium,
     isFavorite
-  } = offer;
+  } = currentOffer;
   const {avatar, name, isSuper} = owner;
-  const {reviewsList} = reviews[0];
-  const ReviewCount = reviewsList.length;
 
-  const coordinates = offers.map((item) => {
-    return item.coordinates;
-  });
+  console.log(currentReviews);
+
+  const markers = offers.map(({coordinates, id}) => ({
+    id,
+    coordinates,
+  }));
 
   const photosMarkup = urls.map((photoUrl) => {
     return (
@@ -181,17 +184,11 @@ const OfferPageScreen = (props) => {
                   {DescriptionsMarkup}
                 </div>
               </div>
-              <section className="property__reviews reviews">
-                <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{ReviewCount}</span></h2>
-                <ul className="reviews__list">
-                  <ReviewListScreen reviews={reviews} />
-                </ul>
-                <ReviewFormScreen />
-              </section>
+              <ReviewListScreen reviews={currentReviews} />
             </div>
           </div>
           <section className="property__map map">
-            <MapScreen coordinates={coordinates} />
+            <MapScreen markers={markers} activeMarker={currentId} />
           </section>
         </section>
         <div className="container">
@@ -199,7 +196,7 @@ const OfferPageScreen = (props) => {
             <h2 className="near-places__title">Other places in the neighbourhood</h2>
             <div className="near-places__list places__list">
               <PlaceCardListScreen
-                offers={offers.slice(1)}
+                offers={nearestOffers}
               />
             </div>
           </section>
@@ -210,7 +207,7 @@ const OfferPageScreen = (props) => {
 };
 
 OfferPageScreen.propTypes = {
-  offer: PropTypes.shape({
+  offers: PropTypes.arrayOf(PropTypes.shape({
     title: PropTypes.string.isRequired,
     descriptions: PropTypes.arrayOf(PropTypes.string).isRequired,
     advantages: PropTypes.arrayOf(PropTypes.string).isRequired,
@@ -229,11 +226,9 @@ OfferPageScreen.propTypes = {
     isPremium: PropTypes.bool.isRequired,
     isFavorite: PropTypes.bool.isRequired,
     id: PropTypes.number.isRequired
-  }).isRequired,
-  reviews: PropTypes.arrayOf(PropTypes.shape).isRequired,
-  offers: PropTypes.arrayOf(PropTypes.shape({
-    coordinates: PropTypes.arrayOf(PropTypes.number).isRequired
   })).isRequired,
+  reviews: PropTypes.arrayOf(PropTypes.shape).isRequired,
+  currentId: PropTypes.number.isRequired,
 };
 
 export default OfferPageScreen;
