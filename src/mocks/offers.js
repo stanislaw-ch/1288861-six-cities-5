@@ -42,16 +42,6 @@ export default [
     guestsCount: 8,
     isPremium: true,
     isFavorite: true,
-    reviews: [
-      {
-        reviewId: 1,
-        reviewAvatar: `https://api.adorable.io/avatars/5`,
-        reviewName: `Max`,
-        reviewDescriptions: `A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam. The building is green and from 18th century.`,
-        reviewDate: `April 2019`,
-        reviewStarsCount: 4,
-      },
-    ],
     coordinates: [52.3909553943508, 4.85309666406198],
   },
   {

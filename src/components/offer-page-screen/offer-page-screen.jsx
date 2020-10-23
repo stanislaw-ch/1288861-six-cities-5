@@ -1,10 +1,15 @@
 import React from "react";
 import PropTypes from "prop-types";
 import {Link} from "react-router-dom";
-import ReviewFormScreen from "../review-form-screen/review-form-screen";
+import ReviewListScreen from "../review-list-screen/review-list-screen";
+import MapScreen from "../map-screen/map-screen";
+import PlaceCardListScreen from "../place-card-list-screen/place-card-list-screen";
 
 const OfferPageScreen = (props) => {
-  const {offer} = props;
+  const {reviews, offers, currentId} = props;
+  const currentOffer = offers.find((item) => item.id === currentId);
+  const nearestOffers = offers.filter((item) => item.id !== currentId);
+  const currentReviews = reviews.find((item) => item.id === currentId);
   const {
     title,
     descriptions,
@@ -17,11 +22,14 @@ const OfferPageScreen = (props) => {
     bedroomsCount,
     guestsCount,
     isPremium,
-    isFavorite,
-    reviews
-  } = offer;
+    isFavorite
+  } = currentOffer;
   const {avatar, name, isSuper} = owner;
-  const {reviewAvatar, reviewName, reviewDescriptions, reviewDate, reviewStarsCount} = reviews[0];
+
+  const markers = offers.map(({coordinates, id}) => ({
+    id,
+    coordinates,
+  }));
 
   const photosMarkup = urls.map((photoUrl) => {
     return (
@@ -49,7 +57,6 @@ const OfferPageScreen = (props) => {
   );
 
   const raitingPercent = starsCount * 20;
-  const reviewRaitingPercent = reviewStarsCount * 20;
 
   const PropertyMarkup = advantages.map((advantage) => {
     return (
@@ -175,146 +182,20 @@ const OfferPageScreen = (props) => {
                   {DescriptionsMarkup}
                 </div>
               </div>
-              <section className="property__reviews reviews">
-                <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">1</span></h2>
-                <ul className="reviews__list">
-                  <li className="reviews__item">
-                    <div className="reviews__user user">
-                      <div className="reviews__avatar-wrapper user__avatar-wrapper">
-                        <img
-                          className="reviews__avatar user__avatar"
-                          src={reviewAvatar}
-                          width="54"
-                          height="54"
-                          alt="Reviews avatar" />
-                      </div>
-                      <span className="reviews__user-name">
-                        {reviewName}
-                      </span>
-                    </div>
-                    <div className="reviews__info">
-                      <div className="reviews__rating rating">
-                        <div className="reviews__stars rating__stars">
-                          <span style={{width: `${reviewRaitingPercent}%`}}></span>
-                          <span className="visually-hidden">Rating</span>
-                        </div>
-                      </div>
-                      <p className="reviews__text">
-                        {reviewDescriptions}
-                      </p>
-                      <time
-                        className="reviews__time"
-                        dateTime="2019-04-24">
-                        {reviewDate}
-                      </time>
-                    </div>
-                  </li>
-                </ul>
-                <ReviewFormScreen />
-              </section>
+              <ReviewListScreen reviews={currentReviews} />
             </div>
           </div>
-          <section className="property__map map"></section>
+          <section className="property__map map">
+            <MapScreen markers={markers} activeMarker={currentId} />
+          </section>
         </section>
         <div className="container">
           <section className="near-places places">
             <h2 className="near-places__title">Other places in the neighbourhood</h2>
             <div className="near-places__list places__list">
-              <article className="near-places__card place-card">
-                <div className="near-places__image-wrapper place-card__image-wrapper">
-                  <a href="#">
-                    <img className="place-card__image" src="/img/room.jpg" width="260" height="200" alt="Place image" />
-                  </a>
-                </div>
-                <div className="place-card__info">
-                  <div className="place-card__price-wrapper">
-                    <div className="place-card__price">
-                      <b className="place-card__price-value">&euro;80</b>
-                      <span className="place-card__price-text">&#47;&nbsp;night</span>
-                    </div>
-                    <button className="place-card__bookmark-button place-card__bookmark-button--active button" type="button">
-                      <svg className="place-card__bookmark-icon" width="18" height="19">
-                        <use href="#icon-bookmark"></use>
-                      </svg>
-                      <span className="visually-hidden">In bookmarks</span>
-                    </button>
-                  </div>
-                  <div className="place-card__rating rating">
-                    <div className="place-card__stars rating__stars">
-                      <span style={{width: `80%`}}></span>
-                      <span className="visually-hidden">Rating</span>
-                    </div>
-                  </div>
-                  <h2 className="place-card__name">
-                    <a href="#">Wood and stone place</a>
-                  </h2>
-                  <p className="place-card__type">Private room</p>
-                </div>
-              </article>
-
-              <article className="near-places__card place-card">
-                <div className="near-places__image-wrapper place-card__image-wrapper">
-                  <a href="#">
-                    <img className="place-card__image" src="/img/apartment-02.jpg" width="260" height="200" alt="Place image" />
-                  </a>
-                </div>
-                <div className="place-card__info">
-                  <div className="place-card__price-wrapper">
-                    <div className="place-card__price">
-                      <b className="place-card__price-value">&euro;132</b>
-                      <span className="place-card__price-text">&#47;&nbsp;night</span>
-                    </div>
-                    <button className="place-card__bookmark-button button" type="button">
-                      <svg className="place-card__bookmark-icon" width="18" height="19">
-                        <use href="#icon-bookmark"></use>
-                      </svg>
-                      <span className="visually-hidden">To bookmarks</span>
-                    </button>
-                  </div>
-                  <div className="place-card__rating rating">
-                    <div className="place-card__stars rating__stars">
-                      <span style={{width: `80%`}}></span>
-                      <span className="visually-hidden">Rating</span>
-                    </div>
-                  </div>
-                  <h2 className="place-card__name">
-                    <a href="#">Canal View Prinsengracht</a>
-                  </h2>
-                  <p className="place-card__type">Apartment</p>
-                </div>
-              </article>
-
-              <article className="near-places__card place-card">
-                <div className="near-places__image-wrapper place-card__image-wrapper">
-                  <a href="#">
-                    <img className="place-card__image" src="/img/apartment-03.jpg" width="260" height="200" alt="Place image" />
-                  </a>
-                </div>
-                <div className="place-card__info">
-                  <div className="place-card__price-wrapper">
-                    <div className="place-card__price">
-                      <b className="place-card__price-value">&euro;180</b>
-                      <span className="place-card__price-text">&#47;&nbsp;night</span>
-                    </div>
-                    <button className="place-card__bookmark-button button" type="button">
-                      <svg className="place-card__bookmark-icon" width="18" height="19">
-                        <use href="#icon-bookmark"></use>
-                      </svg>
-                      <span className="visually-hidden">To bookmarks</span>
-                    </button>
-                  </div>
-                  <div className="place-card__rating rating">
-                    <div className="place-card__stars rating__stars">
-                      <span style={{width: `80%`}}></span>
-                      <span className="visually-hidden">Rating</span>
-                    </div>
-                  </div>
-                  <h2 className="place-card__name">
-                    <a href="#">Nice, cozy, warm big bed apartment</a>
-                  </h2>
-                  <p className="place-card__type">Apartment</p>
-                </div>
-              </article>
+              <PlaceCardListScreen
+                offers={nearestOffers}
+              />
             </div>
           </section>
         </div>
@@ -324,7 +205,7 @@ const OfferPageScreen = (props) => {
 };
 
 OfferPageScreen.propTypes = {
-  offer: PropTypes.shape({
+  offers: PropTypes.arrayOf(PropTypes.shape({
     title: PropTypes.string.isRequired,
     descriptions: PropTypes.arrayOf(PropTypes.string).isRequired,
     advantages: PropTypes.arrayOf(PropTypes.string).isRequired,
@@ -342,18 +223,10 @@ OfferPageScreen.propTypes = {
     guestsCount: PropTypes.number.isRequired,
     isPremium: PropTypes.bool.isRequired,
     isFavorite: PropTypes.bool.isRequired,
-    id: PropTypes.number.isRequired,
-    reviews: PropTypes.arrayOf(PropTypes.shape(
-        {
-          reviewAvatar: PropTypes.string.isRequired,
-          reviewName: PropTypes.string.isRequired,
-          reviewDescriptions: PropTypes.string.isRequired,
-          reviewDate: PropTypes.string.isRequired,
-          reviewStarsCount: PropTypes.number.isRequired,
-          reviewId: PropTypes.number.isRequired,
-        }
-    )).isRequired,
-  }).isRequired,
+    id: PropTypes.number.isRequired
+  })).isRequired,
+  reviews: PropTypes.arrayOf(PropTypes.shape).isRequired,
+  currentId: PropTypes.number.isRequired,
 };
 
 export default OfferPageScreen;
