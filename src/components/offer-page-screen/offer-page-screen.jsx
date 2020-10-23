@@ -26,8 +26,6 @@ const OfferPageScreen = (props) => {
   } = currentOffer;
   const {avatar, name, isSuper} = owner;
 
-  console.log(currentReviews);
-
   const markers = offers.map(({coordinates, id}) => ({
     id,
     coordinates,
