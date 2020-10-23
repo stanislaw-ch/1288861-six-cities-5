@@ -7,9 +7,10 @@ import MapScreen from "../map-screen/map-screen.jsx";
 const MainScreen = (props) => {
   const {offersCount, offers} = props;
 
-  const coordinates = offers.map((offer) => {
-    return offer.coordinates;
-  });
+  const markers = offers.map(({coordinates, id}) => ({
+    coordinates,
+    id,
+  }));
 
   return (
     <div className="page page--gray page--main">
@@ -115,7 +116,7 @@ const MainScreen = (props) => {
             </section>
             <div className="cities__right-section">
               <section className="cities__map map">
-                <MapScreen coordinates={coordinates} />
+                <MapScreen markers={markers} />
               </section>
             </div>
           </div>
