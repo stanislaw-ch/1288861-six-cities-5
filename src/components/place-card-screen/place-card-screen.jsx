@@ -1,13 +1,19 @@
 import React from "react";
 import PropTypes from "prop-types";
-import {Link} from "react-router-dom";
+// import {Link} from "react-router-dom";
 
 const PlaceCardScreen = (props) => {
-  const {offer, onCardHover} = props;
+  const {offer, onCardHover, onCardTitleClick} = props;
   const {title, type, price, url, starsCount, isPremium, isFavorite, id} = offer;
 
   const handleHover = () => {
     onCardHover(id);
+  };
+
+  const handleTitleClick = (evt) => {
+    evt.preventDefault();
+
+    onCardTitleClick(id);
   };
 
   const PremiumMarkup = (
@@ -29,14 +35,14 @@ const PlaceCardScreen = (props) => {
     <article className="cities__place-card place-card" onMouseOver={handleHover}>
       {PremiumMarkup}
       <div className="cities__image-wrapper place-card__image-wrapper">
-        <Link to="/offer/1">
+        <a href="#">
           <img
             className="place-card__image"
             src={url}
             width="260"
             height="200"
             alt="Place image" />
-        </Link>
+        </a>
       </div>
       <div className="place-card__info">
         <div className="place-card__price-wrapper">
@@ -58,7 +64,7 @@ const PlaceCardScreen = (props) => {
           </div>
         </div>
         <h2 className="place-card__name">
-          <Link to="/offer/1">{title}</Link>
+          <a href="#" className="place-card__link" onClick={handleTitleClick}>{title}</a>
         </h2>
         <p className="place-card__type">{type}</p>
       </div>
@@ -78,6 +84,7 @@ PlaceCardScreen.propTypes = {
     id: PropTypes.number.isRequired,
   }).isRequired,
   onCardHover: PropTypes.func.isRequired,
+  onCardTitleClick: PropTypes.func.isRequired,
 };
 
 export default PlaceCardScreen;

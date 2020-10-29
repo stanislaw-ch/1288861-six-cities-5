@@ -1,46 +1,79 @@
-import React from "react";
+import React, {PureComponent} from "react";
 import PropTypes from "prop-types";
 import {Switch, Route, BrowserRouter} from "react-router-dom";
 import MainScreen from "../main-screen/main-screen";
 import AuthScreen from "../auth-screen/auth-screen";
-import FavoritesScreen from "../favorites-screen/favorites-screen";
+// import FavoritesScreen from "../favorites-screen/favorites-screen";
 import OfferPageScreen from "../offer-page-screen/offer-page-screen";
 
-const App = (props) => {
-  const {offersCount, offers, reviews} = props;
+class App extends PureComponent {
+  constructor(props) {
+    super(props);
 
-  return (
-    <BrowserRouter>
-      <Switch>
-        <Route exact path="/">
-          <MainScreen
-            offersCount={offersCount}
-            offers={offers}
-          />
-        </Route>
-        <Route exact path="/login">
-          <AuthScreen />
-        </Route>
-        <Route exact path="/favorites">
-          <FavoritesScreen offers={props.offers}/>
-        </Route>
-        <Route path="/offer/:id?" component={OfferPageScreen}>
-          <OfferPageScreen
-            offer={props.offers[0]}
-            currentId={1}
-            reviews={reviews}
-            offers={offers}
-          />
-        </Route>
-      </Switch>
-    </BrowserRouter>
-  );
-};
+    this.state = {
+      currentId: null,
+    };
+
+    this._handleCardTitleClick = this._handleCardTitleClick.bind(this);
+  }
+
+  render() {
+    return (
+      <BrowserRouter>
+        <Switch>
+          <Route exact path="/">
+            {this._renderPage()}
+          </Route>
+          <Route exact path="/login">
+            <AuthScreen />
+          </Route>
+          {/* <Route exact path="/favorites">
+            <FavoritesScreen offers={this.props.offers} />
+          </Route> */}
+          <Route path="/offer/:id?" component={OfferPageScreen}>
+            <OfferPageScreen
+              currentId={1}
+              onCardTitleClick={this._handleCardTitleClick}
+            />
+          </Route>
+        </Switch>
+      </BrowserRouter>
+    );
+  }
+
+  _renderPage() {
+    const currentId = this.state.currentId;
+
+    if (currentId) {
+      return (
+        <OfferPageScreen
+          currentId={currentId}
+          onCardTitleClick={this._handleCardTitleClick}
+        />
+      );
+    } else {
+      return (
+        <MainScreen
+          cities={this.props.cities}
+          onCardTitleClick={this._handleCardTitleClick}
+        />
+      );
+    }
+  }
+
+  _handleCardTitleClick(id) {
+    this.setState({
+      currentId: id,
+    });
+  }
+}
 
 App.propTypes = {
-  offersCount: PropTypes.number.isRequired,
-  offers: PropTypes.array.isRequired,
-  reviews: PropTypes.array.isRequired,
+  cities: PropTypes.arrayOf(PropTypes.shape({
+    name: PropTypes.string,
+    id: PropTypes.number,
+  })).isRequired,
+  // offers: PropTypes.array.isRequired,
 };
 
 export default App;

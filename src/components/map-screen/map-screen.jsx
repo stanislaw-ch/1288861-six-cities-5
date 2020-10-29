@@ -10,9 +10,7 @@ class MapScreen extends PureComponent {
   }
 
   render() {
-    return (
-      <div id="map" ref={this._mapRef} style={{height: `100%`}} />
-    );
+    return <div id="map" ref={this._mapRef} style={{height: `100%`}} />;
   }
 
   componentDidMount() {
@@ -38,16 +36,19 @@ class MapScreen extends PureComponent {
     this._map.setView(city, zoom);
 
     leaflet
-    .tileLayer(`https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png`, {
-      attribution: `&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>`
-    })
+      .tileLayer(
+          `https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png`,
+          {
+            attribution: `&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>`
+          }
+      )
     .addTo(this._map);
 
     this._addMarkers();
   }
 
   componentDidUpdate(prevProps) {
-    if (this.props.activeMarker !== prevProps.activeMarker) {
+    if (this.props.activeMarker !== prevProps.activeMarker || this.props.markers !== prevProps.markers) {
       this._map.removeLayer(this._layer);
       this._addMarkers();
     }

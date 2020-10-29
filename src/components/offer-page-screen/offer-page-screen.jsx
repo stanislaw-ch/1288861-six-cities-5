@@ -1,4 +1,5 @@
 import React from "react";
+import {connect} from "react-redux";
 import PropTypes from "prop-types";
 import {Link} from "react-router-dom";
 import ReviewListScreen from "../review-list-screen/review-list-screen";
@@ -6,10 +7,9 @@ import MapScreen from "../map-screen/map-screen";
 import PlaceCardListScreen from "../place-card-list-screen/place-card-list-screen";
 
 const OfferPageScreen = (props) => {
-  const {reviews, offers, currentId} = props;
+  const {reviews, offers, currentId, onCardTitleClick} = props;
   const currentOffer = offers.find((item) => item.id === currentId);
   const nearestOffers = offers.filter((item) => item.id !== currentId);
-  const currentReviews = reviews.find((item) => item.id === currentId);
   const {
     title,
     descriptions,
@@ -182,7 +182,7 @@ const OfferPageScreen = (props) => {
                   {DescriptionsMarkup}
                 </div>
               </div>
-              <ReviewListScreen reviews={currentReviews} />
+              <ReviewListScreen reviews={reviews} />
             </div>
           </div>
           <section className="property__map map">
@@ -195,6 +195,7 @@ const OfferPageScreen = (props) => {
             <div className="near-places__list places__list">
               <PlaceCardListScreen
                 offers={nearestOffers}
+                onCardTitleClick={onCardTitleClick}
               />
             </div>
           </section>
@@ -225,8 +226,22 @@ OfferPageScreen.propTypes = {
     isFavorite: PropTypes.bool.isRequired,
     id: PropTypes.number.isRequired
   })).isRequired,
-  reviews: PropTypes.arrayOf(PropTypes.shape).isRequired,
+  reviews: PropTypes.shape({
+    id: PropTypes.number.isRequired,
+    reviewsList: PropTypes.arrayOf(PropTypes.shape({
+      avatar: PropTypes.string.isRequired,
+      name: PropTypes.string.isRequired,
+      descriptions: PropTypes.string.isRequired,
+      date: PropTypes.string.isRequired,
+      starsCount: PropTypes.number.isRequired,
+      id: PropTypes.number.isRequired
+    })).isRequired,
+  }).isRequired,
   currentId: PropTypes.number.isRequired,
+  onCardTitleClick: PropTypes.func.isRequired,
 };
 
-export default OfferPageScreen;
+const mapStateToProps = ({offers, reviews}) => ({offers, reviews});
+
+export {OfferPageScreen};
+export default connect(mapStateToProps)(OfferPageScreen);
