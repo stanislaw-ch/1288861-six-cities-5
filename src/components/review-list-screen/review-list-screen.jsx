@@ -14,7 +14,7 @@ const ReviewListScreen = (props) => {
       </h2>
       <ul className="reviews__list">
         {reviewsList.map((review) => {
-          return <ReviewScreen key={reviews.id} review={review} />;
+          return <ReviewScreen key={review.id} review={review} />;
         })}
       </ul>
       <ReviewFormScreen />

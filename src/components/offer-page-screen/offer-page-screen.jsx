@@ -226,7 +226,17 @@ OfferPageScreen.propTypes = {
     isFavorite: PropTypes.bool.isRequired,
     id: PropTypes.number.isRequired
   })).isRequired,
-  reviews: PropTypes.shape.isRequired,
+  reviews: PropTypes.shape({
+    id: PropTypes.number.isRequired,
+    reviewsList: PropTypes.arrayOf(PropTypes.shape({
+      avatar: PropTypes.string.isRequired,
+      name: PropTypes.string.isRequired,
+      descriptions: PropTypes.string.isRequired,
+      date: PropTypes.string.isRequired,
+      starsCount: PropTypes.number.isRequired,
+      id: PropTypes.number.isRequired
+    })).isRequired,
+  }).isRequired,
   currentId: PropTypes.number.isRequired,
   onCardTitleClick: PropTypes.func.isRequired,
 };
