@@ -20,6 +20,7 @@ class PlaceCardListScreen extends PureComponent {
         key={id}
         offer={offer}
         onCardHover={this._handleCardHover}
+        onCardTitleClick={this.props.onCardTitleClick}
       />;
     });
   }
@@ -30,7 +31,8 @@ class PlaceCardListScreen extends PureComponent {
 }
 
 PlaceCardListScreen.propTypes = {
-  offers: PropTypes.array.isRequired
+  offers: PropTypes.array.isRequired,
+  onCardTitleClick: PropTypes.func.isRequired,
 };
 
 export default PlaceCardListScreen;

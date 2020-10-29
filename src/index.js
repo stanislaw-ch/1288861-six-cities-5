@@ -1,18 +1,19 @@
 import React from "react";
 import ReactDOM from "react-dom";
+import {createStore} from "redux";
+import {Provider} from "react-redux";
 import App from "./components/app/app";
-import offers from "./mocks/offers.js";
-import reviews from "./mocks/reviews.js";
+import {reducer} from "./store/reducer.js";
+import cities from "./mocks/cities.js";
 
-const Settings = {
-  OFFERS_COUNT: 312
-};
+const store = createStore(
+    reducer,
+    window.__REDUX_DEVTOOLS_EXTENSION__ ? window.__REDUX_DEVTOOLS_EXTENSION__() : (f) => f
+);
 
 ReactDOM.render(
-    <App
-      offersCount={Settings.OFFERS_COUNT}
-      offers={offers}
-      reviews={reviews}
-    />,
+    <Provider store={store}>
+      <App cities={cities} />
+    </Provider>,
     document.querySelector(`#root`)
 );

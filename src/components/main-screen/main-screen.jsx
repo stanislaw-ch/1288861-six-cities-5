@@ -1,16 +1,61 @@
 import React from "react";
+import {connect} from "react-redux";
 import PropTypes from "prop-types";
 import PlaceCardListScreen from "../place-card-list-screen/place-card-list-screen";
 import {Link} from "react-router-dom";
 import MapScreen from "../map-screen/map-screen.jsx";
+import CitiesListScreen from "../cities-list-screen/cities-list-screen.jsx";
 
 const MainScreen = (props) => {
-  const {offersCount, offers} = props;
+  const {city, offers, cities, onCardTitleClick} = props;
 
   const markers = offers.map(({coordinates, id}) => ({
     coordinates,
     id,
   }));
+
+  const titleText = offers.length
+    ? `${offers.length} places to stay in ${city.name}`
+    : `No places to stay available`;
+
+  const formMarkup = offers.length
+    ? (
+      <form className="places__sorting" action="#" method="get">
+        <span className="places__sorting-caption">Sort by</span>
+        <span className="places__sorting-type" tabIndex={0}>
+          Popular
+          <svg className="places__sorting-arrow" width={7} height={4}>
+            <use xlinkHref="#icon-arrow-select" />
+          </svg>
+        </span>
+        <ul className="places__options places__options--custom places__options--opened">
+          <li
+            className="places__option places__option--active"
+            tabIndex={0}
+          >
+            Popular
+          </li>
+          <li className="places__option" tabIndex={0}>
+            Price: low to high
+          </li>
+          <li className="places__option" tabIndex={0}>
+            Price: high to low
+          </li>
+          <li className="places__option" tabIndex={0}>
+            Top rated first
+          </li>
+        </ul>
+        {/*
+        <select class="places__sorting-type" id="places-sorting">
+          <option class="places__option" value="popular" selected="">Popular</option>
+          <option class="places__option" value="to-high">Price: low to high</option>
+          <option class="places__option" value="to-low">Price: high to low</option>
+          <option class="places__option" value="top-rated">Top rated first</option>
+        </select>
+        */}
+      </form>
+    )
+    : null;
 
   return (
     <div className="page page--gray page--main">
@@ -47,76 +92,26 @@ const MainScreen = (props) => {
       <main className="page__main page__main--index">
         <h1 className="visually-hidden">Cities</h1>
         <div className="tabs">
-          <section className="locations container">
-            <ul className="locations__list tabs__list">
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="#">
-                  <span>Paris</span>
-                </a>
-              </li>
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="#">
-                  <span>Cologne</span>
-                </a>
-              </li>
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="#">
-                  <span>Brussels</span>
-                </a>
-              </li>
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item tabs__item--active">
-                  <span>Amsterdam</span>
-                </a>
-              </li>
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="#">
-                  <span>Hamburg</span>
-                </a>
-              </li>
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="#">
-                  <span>Dusseldorf</span>
-                </a>
-              </li>
-            </ul>
-          </section>
+          <CitiesListScreen city={city} cities={cities} />
         </div>
         <div className="cities">
           <div className="cities__places-container container">
             <section className="cities__places places">
               <h2 className="visually-hidden">Places</h2>
-              <b className="places__found">{offersCount} places to stay in Amsterdam</b>
-              <form className="places__sorting" action="#" method="get">
-                <span className="places__sorting-caption">Sort by</span>
-                <span className="places__sorting-type" tabIndex="0">
-                  Popular
-                  <svg className="places__sorting-arrow" width="7" height="4">
-                    <use href="#icon-arrow-select"></use>
-                  </svg>
-                </span>
-                <ul className="places__options places__options--custom places__options--opened">
-                  <li className="places__option places__option--active" tabIndex="0">Popular</li>
-                  <li className="places__option" tabIndex="0">Price: low to high</li>
-                  <li className="places__option" tabIndex="0">Price: high to low</li>
-                  <li className="places__option" tabIndex="0">Top rated first</li>
-                </ul>
-
-                {/* <select className="places__sorting-type" id="places-sorting">
-                  <option className="places__option" value="popular" selected="">Popular</option>
-                  <option className="places__option" value="to-high">Price: low to high</option>
-                  <option className="places__option" value="to-low">Price: high to low</option>
-                  <option className="places__option" value="top-rated">Top rated first</option>
-                </select> */}
-
-              </form>
+              <b className="places__found">
+                {titleText}
+              </b>
+              {formMarkup}
               <div className="cities__places-list places__list tabs__content">
-                <PlaceCardListScreen offers={offers} />
+                <PlaceCardListScreen
+                  offers={offers}
+                  onCardTitleClick={onCardTitleClick}
+                />
               </div>
             </section>
             <div className="cities__right-section">
               <section className="cities__map map">
-                <MapScreen markers={markers} />
+                {offers.length && <MapScreen markers={markers} />}
               </section>
             </div>
           </div>
@@ -127,10 +122,21 @@ const MainScreen = (props) => {
 };
 
 MainScreen.propTypes = {
-  offersCount: PropTypes.number.isRequired,
+  city: PropTypes.shape({
+    name: PropTypes.string.isRequired,
+    id: PropTypes.number.isRequired,
+  }),
   offers: PropTypes.arrayOf(PropTypes.shape({
     coordinates: PropTypes.arrayOf(PropTypes.number).isRequired,
-  })).isRequired
+  })).isRequired,
+  cities: PropTypes.arrayOf(PropTypes.shape({
+    name: PropTypes.string,
+    id: PropTypes.number,
+  })).isRequired,
+  onCardTitleClick: PropTypes.func.isRequired,
 };
 
-export default MainScreen;
+const mapStateToProps = ({city, offers}) => ({city, offers});
+
+export {MainScreen};
+export default connect(mapStateToProps)(MainScreen);

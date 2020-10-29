@@ -1,7 +1,7 @@
 export default [
   {
     id: 1,
-    city: `Amsterdam`,
+    cityIds: [1, 3, 5],
     title: `Beautiful & luxurious apartment at great location`,
     descriptions: [
       `A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam.
@@ -46,7 +46,7 @@ export default [
   },
   {
     id: 2,
-    city: `Amsterdam`,
+    cityIds: [2, 5, 4],
     title: `Wood and stone place`,
     descriptions: [
       `A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam.
@@ -87,7 +87,7 @@ export default [
   },
   {
     id: 3,
-    city: `Amsterdam`,
+    cityIds: [1, 3, 4],
     title: `Canal View Prinsengracht`,
     descriptions: [
       `A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam.
@@ -128,7 +128,7 @@ export default [
   },
   {
     id: 4,
-    city: `Amsterdam`,
+    cityIds: [2, 4, 1],
     title: `Nice, cozy, warm big bed apartment`,
     descriptions: [
       `A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam.
@@ -167,15 +167,4 @@ export default [
     isFavorite: true,
     coordinates: [52.3809553943508, 4.939309666406198],
   },
-  // {
-  //   id: 5,
-  //   city: `Cologne`,
-  //   title: `White castle`,
-  //   type: `Apartment`,
-  //   price: 180,
-  //   url: `http://picsum.photos/248/152?r=${Math.random()}`,
-  //   starsCount: 5,
-  //   isPremium: false,
-  //   isFavorite: true,
-  // },
 ];
