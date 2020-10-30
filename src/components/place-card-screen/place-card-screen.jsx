@@ -1,13 +1,14 @@
 import React from "react";
 import PropTypes from "prop-types";
-// import {Link} from "react-router-dom";
 
 const PlaceCardScreen = (props) => {
   const {offer, onCardHover, onCardTitleClick} = props;
   const {title, type, price, url, starsCount, isPremium, isFavorite, id} = offer;
 
   const handleHover = () => {
-    onCardHover(id);
+    if (onCardHover) {
+      onCardHover(id);
+    }
   };
 
   const handleTitleClick = (evt) => {
@@ -32,7 +33,7 @@ const PlaceCardScreen = (props) => {
   const raitingPercent = starsCount * 20;
 
   return (
-    <article className="cities__place-card place-card" onMouseOver={handleHover}>
+    <article className="cities__place-card place-card" onMouseOver={handleHover} onMouseOut={handleHover}>
       {PremiumMarkup}
       <div className="cities__image-wrapper place-card__image-wrapper">
         <a href="#">
