@@ -1,30 +1,34 @@
 import cities from "../mocks/cities.js";
-import offers from "../mocks/offers.js";
+import mocksOffers from "../mocks/offers.js";
 import reviews from "../mocks/reviews.js";
 import {extend} from "../utils.js";
 import {ActionType} from "./action";
+import {SortType} from "../const.js";
+
+const initialOffers = mocksOffers.filter((offer) => {
+  return offer.cityIds.includes(cities[0].id);
+});
 
 const initialState = {
-  city: cities[0],
   reviews: reviews[0],
-  offers: offers.filter((offer) => {
-    return offer.cityIds.includes(cities[0].id);
-  }),
+  mocksOffers,
+  city: cities[0],
+  sortType: SortType.POPULAR,
+  offers: initialOffers,
 };
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
     case ActionType.SET_ACTIVE_CITY:
       return extend(state, {
-        city: cities.find((city) => {
-          return city.id === action.payload;
-        }),
-        reviews: reviews.find((review) => {
-          return review.id === action.payload;
-        }),
-        offers: offers.filter((offer) => {
-          return offer.cityIds.includes(action.payload);
-        }),
+        city: action.payload.city,
+        offers: action.payload.offers,
+        reviews: action.payload.reviews,
+      });
+    case ActionType.SET_SORT_TYPE:
+      return extend(state, {
+        sortType: action.payload.sortType,
+        offers: action.payload.offers,
       });
   }
 
