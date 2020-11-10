@@ -6,6 +6,7 @@ import clsx from "clsx";
 import {sortOffersByType} from "../../utils.js";
 
 const CitiesListScreen = (props) => {
+
   const citiesMarkup = props.cities.map((city) => {
     return (
       <li key={city.id} className="locations__item">

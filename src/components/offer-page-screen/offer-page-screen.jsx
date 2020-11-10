@@ -7,6 +7,7 @@ import MapScreen from "../map-screen/map-screen";
 import PlaceCardListScreen from "../place-card-list-screen/place-card-list-screen";
 
 const OfferPageScreen = (props) => {
+
   const {reviews, offers, currentId, onCardTitleClick} = props;
   const currentOffer = offers.find((item) => item.id === currentId);
   const nearestOffers = offers.filter((item) => item.id !== currentId);
