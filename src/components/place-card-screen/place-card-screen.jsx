@@ -5,9 +5,15 @@ const PlaceCardScreen = (props) => {
   const {offer, onCardHover, onCardTitleClick} = props;
   const {title, type, price, url, starsCount, isPremium, isFavorite, id} = offer;
 
-  const handleHover = () => {
+  const handleCardMouseOver = () => {
     if (onCardHover) {
       onCardHover(id);
+    }
+  };
+
+  const handleCardMouseOut = () => {
+    if (onCardHover) {
+      onCardHover();
     }
   };
 
@@ -33,7 +39,7 @@ const PlaceCardScreen = (props) => {
   const raitingPercent = starsCount * 20;
 
   return (
-    <article className="cities__place-card place-card" onMouseOver={handleHover} onMouseOut={handleHover}>
+    <article className="cities__place-card place-card" onMouseOver={handleCardMouseOver} onMouseOut={handleCardMouseOut}>
       {PremiumMarkup}
       <div className="cities__image-wrapper place-card__image-wrapper">
         <a href="#">
@@ -84,7 +90,7 @@ PlaceCardScreen.propTypes = {
     isFavorite: PropTypes.bool.isRequired,
     id: PropTypes.number.isRequired,
   }).isRequired,
-  onCardHover: PropTypes.func.isRequired,
+  onCardHover: PropTypes.func,
   onCardTitleClick: PropTypes.func.isRequired,
 };
 

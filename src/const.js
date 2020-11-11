@@ -5,9 +5,9 @@ export const SortType = {
   POPULAR: `Popular`,
 };
 
-export const sortTypes = [
-  `Popular`,
-  `Price: low to high`,
-  `Price: high to low`,
-  `Top rated first`,
-];
+// export const sortTypes = [
+//   `Popular`,
+//   `Price: low to high`,
+//   `Price: high to low`,
+//   `Top rated first`,
+// ];
