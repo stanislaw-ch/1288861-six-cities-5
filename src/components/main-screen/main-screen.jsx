@@ -6,6 +6,7 @@ import {Link} from "react-router-dom";
 import MapScreen from "../map-screen/map-screen";
 import SortScreen from "../sort-screen/sort-screen";
 import CitiesListScreen from "../cities-list-screen/cities-list-screen";
+import EmptyCitiesScreen from "../empty-cities-screen/empty-cities-screen";
 import {withActiveId} from "../../hocs/with-active-id/with-active-id.jsx";
 
 const MainScreen = (props) => {
@@ -16,9 +17,29 @@ const MainScreen = (props) => {
     id,
   }));
 
-  const titleText = offers.length
-    ? `${offers.length} places to stay in ${city.name}`
-    : `No places to stay available`;
+  const citiesContainerMarkup = offers.length
+    ? (<div className="cities__places-container container">
+      <section className="cities__places places">
+        <h2 className="visually-hidden">Places</h2>
+        <b className="places__found">
+          {`${offers.length} places to stay in ${city.name}`}
+        </b>
+        {(offers.length) ? <SortScreen /> : null}
+        <div className="cities__places-list places__list tabs__content">
+          <PlaceCardListScreen
+            offers={offers}
+            onCardTitleClick={onCardTitleClick}
+            onCardHover={onActiveCardIdChange}
+          />
+        </div>
+      </section>
+      <div className="cities__right-section">
+        <section className="cities__map map">
+          {(offers.length) ? <MapScreen markers={markers} activeMarker={activeCardId} /> : null}
+        </section>
+      </div>
+    </div>)
+    : <EmptyCitiesScreen city={city.name}/>;
 
   return (
     <div className="page page--gray page--main">
@@ -58,27 +79,7 @@ const MainScreen = (props) => {
           <CitiesListScreen cities={cities} />
         </div>
         <div className="cities">
-          <div className="cities__places-container container">
-            <section className="cities__places places">
-              <h2 className="visually-hidden">Places</h2>
-              <b className="places__found">
-                {titleText}
-              </b>
-              {(offers.length) ? <SortScreen /> : null}
-              <div className="cities__places-list places__list tabs__content">
-                <PlaceCardListScreen
-                  offers={offers}
-                  onCardTitleClick={onCardTitleClick}
-                  onCardHover={onActiveCardIdChange}
-                />
-              </div>
-            </section>
-            <div className="cities__right-section">
-              <section className="cities__map map">
-                {(offers.length) ? <MapScreen markers={markers} activeMarker={activeCardId} /> : null}
-              </section>
-            </div>
-          </div>
+          {citiesContainerMarkup}
         </div >
       </main>
     </div>
